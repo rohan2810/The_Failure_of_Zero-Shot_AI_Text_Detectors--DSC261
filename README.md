@@ -82,9 +82,49 @@ python generate_synthetic_data.py
 Outputs saved to `eurlex_synthetic_data/`:
 - `original_10000_samples.csv`
 - `synthetic_10000_samples.csv`
-
 ---
 
 ## Data
 
-Original and generated synthetic data are available in `eurlex_synthetic_data/`.
+Original and generated synthetic data are available in `eurlex_synthetic_data`.
+
+---
+
+## Running Inference
+
+### Binoculars Inference
+
+Run Binoculars detector on the synthetic and original datasets:
+
+```bash
+cd Binoculars
+python infer.py
+```
+
+This processes both datasets and outputs results with detection probabilities to:
+- `./outputs/eurlex_synthetic_data/synthetic_10k_samples.csv`
+- `./outputs/eurlex_synthetic_data/original_10k_samples.csv`
+
+For more details, see [`Binoculars/README.md`](Binoculars/README.md).
+
+### OOD-DeepSVDD Inference
+
+First, download the pre-trained model weights from [Google Drive](https://drive.google.com/drive/folders/173jObPXmvAS9R0s1PERaSgsbeXlULfHl?usp=sharing).
+
+Then run the OOD detector:
+
+```bash
+cd ood-llm-detect
+python infer.py --model_path <path_to_model>/model_classifier_best.pth \
+                --ood_type deepsvdd \
+                --mode deepfake \
+                --out_dim 768
+```
+
+Results are saved to:
+- `./outputs/eurlex_synthetic_data/synthetic_10k_samples.csv`
+- `./outputs/eurlex_synthetic_data/original_10k_samples.csv`
+
+For more details, see [`ood-llm-detect/README.md`](ood-llm-detect/README.md).
+
+---
